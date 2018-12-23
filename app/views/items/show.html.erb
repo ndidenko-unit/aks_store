@@ -1,19 +1,31 @@
+<div class="center">
 <p id="notice"><%= notice %></p>
 
+<div class="alert alert-info" role="alert"><h1><p>
+  <strong>ID товара:</strong>
+  <%= @item.id %>
+</p></h1></div>
+
 <p>
-  <strong>Name:</strong>
+  <strong>Название:</strong>
   <%= @item.name %>
 </p>
 
 <p>
-  <strong>Purchase:</strong>
+  <strong>Закупка:</strong>
   <%= @item.purchase %>
 </p>
 
 <p>
-  <strong>Retail:</strong>
+  <strong>Цена продажи:</strong>
   <%= @item.retail %>
 </p>
 
-<%= link_to 'Edit', edit_item_path(@item) %> |
-<%= link_to 'Back', items_path %>
+  <div class="alert alert-info" role="alert">
+    <strong>Статус товара:</strong>
+    <h1><%= @item.status.name %></h1>
+  </div>
+
+<%= link_to 'Изменить', edit_item_path(@item) %> |
+<%= link_to 'Назад', items_path %>
+</div>

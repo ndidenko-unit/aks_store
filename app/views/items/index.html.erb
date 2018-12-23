@@ -25,9 +25,9 @@
         <td><%= item.retail %></td>
         <td><%= item.store.name %></td>
         <td><%= item.status.name %></td>
-        <td><%= link_to 'Show', item %></td>
-        <td><%= link_to 'Edit', edit_item_path(item) %></td>
-        <td><%= link_to 'Destroy', item, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to 'Просмотреть', item %></td>
+        <td><%= link_to 'Изменить', edit_item_path(item) %></td>
+        <td><%= link_to 'Удалить', item, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
   </tbody>
