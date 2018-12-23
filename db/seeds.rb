@@ -5,3 +5,15 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+
+Status.create(name: 'В наличии')
+Status.create(name: 'Продан')
+Status.create(name: 'Брак')
+
+Store.create(name: 'Точка 1')
+Store.create(name: 'Точка 2')
+Store.create(name: 'Склад')
+
+Item.create(name: 'Iphone', purchase: 7.80, retail: 400, status_id: 1, store_id: 1)
+Item.create(name: 'Samsung', purchase: 8.30, retail: 500, status_id: 2, store_id: 2)
+Item.create(name: 'HTC', purchase: 5.40, retail: 600, status_id: 3, store_id: 3)
