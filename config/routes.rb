@@ -3,4 +3,5 @@ Rails.application.routes.draw do
   resources :items
   resources :statuses
   resources :stores
+  resources :trading_days
 end

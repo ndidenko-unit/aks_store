@@ -1,0 +1,24 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Day:</strong>
+  <%= @trading_day.day %>
+</p>
+
+<p>
+  <strong>Month:</strong>
+  <%= @trading_day.month %>
+</p>
+
+<p>
+  <strong>Year:</strong>
+  <%= @trading_day.year %>
+</p>
+
+<p>
+  <strong>Store:</strong>
+  <%= @trading_day.store_id %>
+</p>
+
+<%= link_to 'Edit', edit_trading_day_path(@trading_day) %> |
+<%= link_to 'Back', trading_days_path %>
