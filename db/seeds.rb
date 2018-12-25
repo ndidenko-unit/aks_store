@@ -17,3 +17,9 @@ Store.create(name: 'Склад')
 Item.create(name: 'Iphone', purchase: 7.80, retail: 400, status_id: 1, store_id: 1)
 Item.create(name: 'Samsung', purchase: 8.30, retail: 500, status_id: 2, store_id: 2)
 Item.create(name: 'HTC', purchase: 5.40, retail: 600, status_id: 3, store_id: 3)
+
+User.create(
+    email: "5773480@gmail.com",
+    password: 5956861,
+    password_confirmation: 5956861
+)

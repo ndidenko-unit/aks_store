@@ -11,12 +11,25 @@
   </head>
 
   <body>
-  <ul class="nav nav-tabs">
+    <div class="col-md-10">
+      <ul class="nav nav-tabs">
 
-    <li role="presentation" <%='class=active' if current_page?(items_path) %>><a href="<%= items_path %>">Управление товарами</a></li>
-    <li role="presentation" <%='class=active' if current_page?(statuses_path) %>><a href="<%= statuses_path %>">Управление статусами</a></li>
-    <li role="presentation" <%='class=active' if current_page?(stores_path) %>><a href="<%= stores_path %>">Управление точками</a></li>
-  </ul>
+        <li role="presentation" <%='class=active' if current_page?(items_path) %>><a href="<%= items_path %>">Управление товарами</a></li>
+        <li role="presentation" <%='class=active' if current_page?(statuses_path) %>><a href="<%= statuses_path %>">Управление статусами</a></li>
+        <li role="presentation" <%='class=active' if current_page?(stores_path) %>><a href="<%= stores_path %>">Управление точками</a></li>
+        <li role="presentation" <%='class=active' if current_page?(trading_days_path) %>><a href="<%= trading_days_path %>">Торговые дни</a></li>
+      </ul>
+  </div>
+  <div class="col-md-2">
+    <% if user_signed_in? %>
+      <p>Welcome, <%= current_user.email %></p>
+      <p><%= link_to 'User settings', edit_user_registration_path %></p>
+      <p><%= link_to 'Logout', destroy_user_session_path, :method => :delete %></p>
+    <% else %>
+      <p><%= link_to 'Login', new_user_session_path %> или <%= link_to 'Sign up', new_user_registration_path %></p>
+    <% end %>
+  </div>
+<br><br>
     <%= yield %>
   </body>
 </html>

@@ -1,6 +1,6 @@
 class TradingDaysController < ApplicationController
   before_action :set_trading_day, only: [:show, :edit, :update, :destroy]
-
+  before_action :authenticate_user!
   # GET /trading_days
   # GET /trading_days.json
   def index
@@ -69,6 +69,6 @@ class TradingDaysController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def trading_day_params
-      params.require(:trading_day).permit(:day, :month, :year, :store_id)
+      params.require(:trading_day).permit(:day, :month, :year, :store_id, :user_id)
     end
 end
