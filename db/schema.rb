@@ -18,10 +18,12 @@ ActiveRecord::Schema.define(version: 2018_12_25_130221) do
     t.float "retail"
     t.integer "status_id"
     t.integer "store_id"
+    t.integer "trading_day_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["status_id"], name: "index_items_on_status_id"
     t.index ["store_id"], name: "index_items_on_store_id"
+    t.index ["trading_day_id"], name: "index_items_on_trading_day_id"
   end
 
   create_table "statuses", force: :cascade do |t|

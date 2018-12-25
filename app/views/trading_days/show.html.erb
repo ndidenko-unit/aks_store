@@ -1,24 +1,44 @@
 <p id="notice"><%= notice %></p>
+<div class="container">
+<div class="jumbotron">
 
-<p>
-  <strong>Day:</strong>
-  <%= @trading_day.day %>
-</p>
+  <h2>Торговый день: <%= @trading_day.day %>/<%= @trading_day.month %>/<%= @trading_day.year %> | Магазин: <%= @trading_day.store.name %></h2>
+  <p>Создал: <%= @trading_day.user.email %></p>
+  <p><a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a></p>
+  </div>
+</div>
 
-<p>
-  <strong>Month:</strong>
-  <%= @trading_day.month %>
-</p>
+<br><br>
+<table class="table">
+  <thead>
+  <tr class="info">
+      <th>ID</th>
+      <th>Название</th>
+      <th>Закупка $</th>
+      <th>Цена</th>
+      <th>Закреплен</th>
+      <th>Статус</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
 
-<p>
-  <strong>Year:</strong>
-  <%= @trading_day.year %>
-</p>
+  <tbody>
+    <% @trading_day.items.each do |item| %>
+      <tr>
+        <td><%= item.id %></td>
+        <td><%= item.name %></td>
+        <td><%= item.purchase %></td>
+        <td><%= item.retail %></td>
+        <td><%= item.store.name %></td>
+        <td><%= item.status.name %></td>
+        <td><%= link_to 'Просмотреть', item %></td>
+        <td><%= link_to 'Изменить', edit_item_path(item) %></td>
+        <td><%= link_to 'Удалить', item, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
 
-<p>
-  <strong>Store:</strong>
-  <%= @trading_day.store_id %>
-</p>
 
 <%= link_to 'Edit', edit_trading_day_path(@trading_day) %> |
 <%= link_to 'Back', trading_days_path %>
