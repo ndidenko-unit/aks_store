@@ -65,7 +65,7 @@ class TradingDaysController < ApplicationController
     begin
       @item = Item.find(params[:trading_day][:item_ids])
         if @item.trading_day.present?
-          redirect_to @trading_day, notice: "Товар #{@item.name} уже продан."; return
+          redirect_to @trading_day, notice: "Товар #{@item.name} уже продан. #{view_context.link_to('Посмотреть день', @item.trading_day)}"; return
         elsif @item.store != @trading_day.store
         redirect_to @trading_day, notice: "Товар #{@item.name} закреплен за точкой #{@item.store.name}."; return
         end

@@ -8,7 +8,7 @@
   <%= form_for @trading_day, :url => url_for(:action => 'trade_item') do |form| %> 
     <p><br/><%= form.text_field :item_ids, class: 'form-control', autofocus: true, autocomplete: false, size: 5 %></p>
     <p><%= form.submit "Продать", class: 'btn-primary' %></p>
-    <p id="notice"><%= notice %></p>
+    <p id="notice"><%= notice.html_safe if notice.present? %></p>
   <% end %>
 
   </div>
