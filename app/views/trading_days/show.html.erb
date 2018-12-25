@@ -1,10 +1,16 @@
-<p id="notice"><%= notice %></p>
+
 <div class="container">
 <div class="jumbotron">
 
   <h2>Торговый день: <%= @trading_day.day %>/<%= @trading_day.month %>/<%= @trading_day.year %> | Магазин: <%= @trading_day.store.name %></h2>
   <p>Создал: <%= @trading_day.user.email %></p>
-  <p><a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a></p>
+
+  <%= form_for @trading_day, :url => url_for(:action => 'trade_item') do |form| %> 
+    <p><br/><%= form.text_field :item_ids, class: 'form-control', autofocus: true, autocomplete: false, size: 5 %></p>
+    <p><%= form.submit "Продать", class: 'btn-primary' %></p>
+    <p id="notice"><%= notice %></p>
+  <% end %>
+
   </div>
 </div>
 

@@ -4,6 +4,10 @@ Rails.application.routes.draw do
   resources :items
   resources :statuses
   resources :stores
-  resources :trading_days
+  resources :trading_days do
+    member do
+      patch 'trade_item'
+    end
+  end
   root 'items#index'
 end

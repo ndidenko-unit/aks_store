@@ -1,5 +1,5 @@
 class TradingDaysController < ApplicationController
-  before_action :set_trading_day, only: [:show, :edit, :update, :destroy]
+  before_action :set_trading_day, only: [:show, :edit, :update, :destroy, :trade_item]
   before_action :authenticate_user!
   # GET /trading_days
   # GET /trading_days.json
@@ -58,6 +58,21 @@ class TradingDaysController < ApplicationController
     respond_to do |format|
       format.html { redirect_to trading_days_url, notice: 'Trading day was successfully destroyed.' }
       format.json { head :no_content }
+    end
+  end
+
+  def trade_item
+    begin
+      @item = Item.find(params[:trading_day][:item_ids])
+        if @item.trading_day.present?
+          redirect_to @trading_day, notice: "Товар #{@item.name} уже продан."; return
+        elsif @item.store != @trading_day.store
+        redirect_to @trading_day, notice: "Товар #{@item.name} закреплен за точкой #{@item.store.name}."; return
+        end
+      @trading_day.items << @item
+      redirect_to @trading_day, notice: "Товар #{@item.name} добавлен в список продаж."
+    rescue
+      redirect_to @trading_day, notice: "Товар с таким кодом не найден."
     end
   end
 
