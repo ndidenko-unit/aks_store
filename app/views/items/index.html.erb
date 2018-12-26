@@ -5,7 +5,7 @@
 <br><br>
 <table class="table">
   <thead>
-  <tr class="info">
+    <tr class="info">
       <th>ID</th>
       <th>Название</th>
       <th>Закупка $</th>
@@ -18,7 +18,13 @@
 
   <tbody>
     <% @items.each do |item| %>
-      <tr>
+      <tr
+        <% if item.status.name == 'Продан' %>
+          class="success"
+        <% elsif item.status.name == 'Брак' %>
+          class="danger"
+        <% end %>
+      >
         <td><%= item.id %></td>
         <td><%= item.name %></td>
         <td><%= item.purchase %></td>

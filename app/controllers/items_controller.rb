@@ -1,5 +1,5 @@
 class ItemsController < ApplicationController
-  before_action :set_item, only: [:show, :edit, :update, :destroy]
+  before_action :set_item, only: [:show, :edit, :update, :destroy, :cancel_sale]
   before_action :authenticate_user!
 
   # GET /items
@@ -55,6 +55,15 @@ class ItemsController < ApplicationController
     respond_to do |format|
       format.html { redirect_to items_url, notice: 'Item was successfully destroyed.' }
     end
+  end
+
+  def cancel_sale
+    # binding.pry
+    @trading_day = @item.trading_day
+    @trading_day.items.delete(@item)
+    status_stock = {status_id: 1}
+    @item.update(status_stock)
+    redirect_to @trading_day, notice: 'Продажа отменена.'
   end
 
   private

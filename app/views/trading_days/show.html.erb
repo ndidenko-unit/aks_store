@@ -7,44 +7,75 @@
 
   <%= form_for @trading_day, :url => url_for(:action => 'trade_item') do |form| %> 
     <p><br/><%= form.text_field :item_ids, class: 'form-control', autofocus: true, autocomplete: false, size: 5 %></p>
-    <p><%= form.submit "Продать", class: 'btn-primary' %></p>
+    <p><%= form.submit "Продать", class: 'btn btn-primary' %></p>
     <p id="notice"><%= notice.html_safe if notice.present? %></p>
   <% end %>
-
   </div>
 </div>
+<center><h3>Выручка: <%= @trading_day.proceeds %> грн.</h3></center>
+<br>
+<% if @trading_day.items.present? %>
+  <table class="table">
+    <thead>
+      <tr class="info">
+        <th>ID</th>
+        <th>Название</th>
+        <th>Закупка $</th>
+        <th>Цена</th>
+        <th>Закреплен</th>
+        <th>Статус</th>
+        <th colspan="3"></th>
+      </tr>
+    </thead>
 
-<br><br>
-<table class="table">
-  <thead>
-  <tr class="info">
+    <tbody>
+      <% @trading_day.items.each do |item| %>
+        <tr>
+          <td><%= item.id %></td>
+          <td><%= item.name %></td>
+          <td><%= item.purchase %></td>
+          <td><%= item.retail %></td>
+          <td><%= item.store.name %></td>
+          <td><%= item.status.name %></td>
+          <td><%= link_to 'Просмотреть', item %></td>
+          <td><%= link_to 'Изменить', edit_item_path(item) %></td>
+          <td><%= link_to 'Удалить', cancel_sale_item_path(item), data: { confirm: 'Are you sure?' } %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+  <br>
+  <hr>
+<% end %>
+<%= form_for @expense, :url => url_for(:action => 'add_expense'), html: {class: 'navbar-form'} do |form| %>
+    <%= form.label :sum, 'Сумма расхода:' %>
+    <%= form.text_field :sum, class: 'form-control', autofocus: true, autocomplete: false, size: 5 %>
+    <%= form.label :comment, 'Комментарий:' %>
+    <%= form.text_field :comment, class: 'form-control', autofocus: true, autocomplete: false, size: 5 %>
+    <%= form.submit "Добавить", class: 'btn btn-primary' %>
+<% end %>
+
+<% if @trading_day.expenses.present? %>
+  <table class="table">
+    <thead>
+    <tr class="danger">
       <th>ID</th>
-      <th>Название</th>
-      <th>Закупка $</th>
-      <th>Цена</th>
-      <th>Закреплен</th>
-      <th>Статус</th>
+      <th>Причина расхода</th>
+      <th>Сумма расхода</th>
       <th colspan="3"></th>
     </tr>
-  </thead>
-
-  <tbody>
-    <% @trading_day.items.each do |item| %>
+    </thead>
+    <tbody>
+    <% @trading_day.expenses.each do |expense| %>
       <tr>
-        <td><%= item.id %></td>
-        <td><%= item.name %></td>
-        <td><%= item.purchase %></td>
-        <td><%= item.retail %></td>
-        <td><%= item.store.name %></td>
-        <td><%= item.status.name %></td>
-        <td><%= link_to 'Просмотреть', item %></td>
-        <td><%= link_to 'Изменить', edit_item_path(item) %></td>
-        <td><%= link_to 'Удалить', item, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= expense.id %></td>
+        <td><%= expense.comment %></td>
+        <td><%= expense.sum %></td>
+        <td><%= link_to 'Удалить', expense, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
-  </tbody>
-</table>
-
-
+    </tbody>
+  </table>
+<% end %>
 <%= link_to 'Edit', edit_trading_day_path(@trading_day) %> |
 <%= link_to 'Back', trading_days_path %>

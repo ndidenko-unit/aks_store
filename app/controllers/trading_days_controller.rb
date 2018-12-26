@@ -1,5 +1,5 @@
 class TradingDaysController < ApplicationController
-  before_action :set_trading_day, only: [:show, :edit, :update, :destroy, :trade_item]
+  before_action :set_trading_day, only: [:show, :edit, :update, :destroy, :trade_item, :add_expense]
   before_action :authenticate_user!
   # GET /trading_days
   # GET /trading_days.json
@@ -10,6 +10,7 @@ class TradingDaysController < ApplicationController
   # GET /trading_days/1
   # GET /trading_days/1.json
   def show
+    @expense = Expense.new
   end
 
   # GET /trading_days/new
@@ -67,13 +68,20 @@ class TradingDaysController < ApplicationController
         if @item.trading_day.present?
           redirect_to @trading_day, notice: "Товар #{@item.name} уже продан. #{view_context.link_to('Посмотреть день', @item.trading_day)}"; return
         elsif @item.store != @trading_day.store
-        redirect_to @trading_day, notice: "Товар #{@item.name} закреплен за точкой #{@item.store.name}."; return
+        redirect_to @trading_day, notice: "Товар #{view_context.link_to("#{@item.name}", @item)} закреплен за точкой #{@item.store.name}."; return
         end
+      status_sold = {status_id: 2}
+      @item.update(status_sold)
       @trading_day.items << @item
       redirect_to @trading_day, notice: "Товар #{@item.name} добавлен в список продаж."
     rescue
       redirect_to @trading_day, notice: "Товар с таким кодом не найден."
     end
+  end
+
+  def add_expense
+    @expense = Expense.create(sum: params[:expense][:sum], comment: params[:expense][:comment], trading_day_id: @trading_day.id)
+    redirect_to @trading_day
   end
 
   private
