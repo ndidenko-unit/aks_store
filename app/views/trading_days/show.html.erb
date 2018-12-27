@@ -5,14 +5,18 @@
   <h2>Торговый день: <%= @trading_day.day %>/<%= @trading_day.month %>/<%= @trading_day.year %> | Магазин: <%= @trading_day.store.name %></h2>
   <p>Создал: <%= @trading_day.user.email %></p>
 
-  <%= form_for @trading_day, :url => url_for(:action => 'trade_item') do |form| %> 
-    <p><br/><%= form.text_field :item_ids, class: 'form-control', autofocus: true, autocomplete: false, size: 5 %></p>
-    <p><%= form.submit "Продать", class: 'btn btn-primary' %></p>
+  <%= form_for @trading_day, :url => url_for(:action => 'trade_item'), html: {class: 'navbar-form'} do |form| %>
+    <%= form.label :item_ids, 'Код товара:' %>
+    <%= form.text_field :item_ids, class: 'form-control', autofocus: true, value: '', size: 7 %>
+    <%= form.submit "Продать", class: 'btn btn-primary' %>
     <p id="notice"><%= notice.html_safe if notice.present? %></p>
   <% end %>
   </div>
 </div>
-<center><h3>Выручка: <%= @trading_day.proceeds %> грн.</h3></center>
+<center>
+  <h5>Выручка без расходов: <%= @trading_day.proceeds %> грн.</h5>
+  <h3>Выручка с учетом расходов: <%= @trading_day.proceeds - @trading_day.all_expenses %> грн.</h3>
+</center>
 <br>
 <% if @trading_day.items.present? %>
   <table class="table">
@@ -47,14 +51,8 @@
   <br>
   <hr>
 <% end %>
-<%= form_for @expense, :url => url_for(:action => 'add_expense'), html: {class: 'navbar-form'} do |form| %>
-    <%= form.label :sum, 'Сумма расхода:' %>
-    <%= form.text_field :sum, class: 'form-control', autofocus: true, autocomplete: false, size: 5 %>
-    <%= form.label :comment, 'Комментарий:' %>
-    <%= form.text_field :comment, class: 'form-control', autofocus: true, autocomplete: false, size: 5 %>
-    <%= form.submit "Добавить", class: 'btn btn-primary' %>
-<% end %>
 
+<center><h3>Общий расход: <%= @trading_day.all_expenses %> грн.</h3></center>
 <% if @trading_day.expenses.present? %>
   <table class="table">
     <thead>
@@ -77,5 +75,14 @@
     </tbody>
   </table>
 <% end %>
+
+<%= form_for @expense, :url => url_for(:action => 'add_expense'), html: {class: 'navbar-form'} do |form| %>
+  <%= form.label :sum, 'Сумма расхода в грн:' %>
+  <%= form.text_field :sum, class: 'form-control', autocomplete: false, size: 5 %>
+  <%= form.label :comment, 'Причина расхода:' %>
+  <%= form.text_field :comment, class: 'form-control', autocomplete: false, size: 25 %>
+  <%= form.submit "Добавить", class: 'btn btn-primary' %>
+<% end %>
+
 <%= link_to 'Edit', edit_trading_day_path(@trading_day) %> |
 <%= link_to 'Back', trading_days_path %>

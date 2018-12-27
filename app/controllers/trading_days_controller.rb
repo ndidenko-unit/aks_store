@@ -66,7 +66,7 @@ class TradingDaysController < ApplicationController
     begin
       @item = Item.find(params[:trading_day][:item_ids])
         if @item.trading_day.present?
-          redirect_to @trading_day, notice: "Товар #{@item.name} уже продан. #{view_context.link_to('Посмотреть день', @item.trading_day)}"; return
+          redirect_to @trading_day, notice: "Товар #{@item.name} уже продан #{@item.trading_day.date_and_store}. #{view_context.link_to('Посмотреть день', @item.trading_day)}"; return
         elsif @item.store != @trading_day.store
         redirect_to @trading_day, notice: "Товар #{view_context.link_to("#{@item.name}", @item)} закреплен за точкой #{@item.store.name}."; return
         end
@@ -81,7 +81,11 @@ class TradingDaysController < ApplicationController
 
   def add_expense
     @expense = Expense.create(sum: params[:expense][:sum], comment: params[:expense][:comment], trading_day_id: @trading_day.id)
-    redirect_to @trading_day
+    if @expense.id.present?
+      redirect_to @trading_day, notice: "Расход успешно добавлен."
+    else
+      redirect_to @trading_day, notice: "Неверно введены данные расхода."
+    end
   end
 
   private
