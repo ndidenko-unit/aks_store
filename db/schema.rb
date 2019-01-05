@@ -12,10 +12,13 @@
 
 ActiveRecord::Schema.define(version: 2018_12_26_183910) do
 
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "expenses", force: :cascade do |t|
     t.float "sum"
     t.string "comment"
-    t.integer "trading_day_id"
+    t.bigint "trading_day_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["trading_day_id"], name: "index_expenses_on_trading_day_id"
@@ -25,9 +28,9 @@ ActiveRecord::Schema.define(version: 2018_12_26_183910) do
     t.string "name"
     t.float "purchase"
     t.float "retail"
-    t.integer "status_id"
-    t.integer "store_id"
-    t.integer "trading_day_id"
+    t.bigint "status_id"
+    t.bigint "store_id"
+    t.bigint "trading_day_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["status_id"], name: "index_items_on_status_id"
@@ -52,8 +55,8 @@ ActiveRecord::Schema.define(version: 2018_12_26_183910) do
     t.integer "month"
     t.integer "year"
     t.float "proceeds"
-    t.integer "store_id"
-    t.integer "user_id"
+    t.bigint "store_id"
+    t.bigint "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["store_id"], name: "index_trading_days_on_store_id"

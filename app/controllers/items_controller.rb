@@ -5,7 +5,22 @@ class ItemsController < ApplicationController
   # GET /items
   # GET /items.json
   def index
-    @items = Item.all
+    @item = Item.new
+    @items = []
+    @items = search_items(params[:search])
+  end
+
+  def search_items(search_params)
+    items = []
+    search_params ||= ''
+    items = Item.where(id: search_params) if search_params.scan(/\D/).empty?
+    items += Item.where("name ~* ?", search_params) unless search_params.blank?
+    items = Item.all if search_params.blank?
+    begin
+    items.reverse_order
+    rescue
+      items
+    end
   end
 
   # GET /items/1

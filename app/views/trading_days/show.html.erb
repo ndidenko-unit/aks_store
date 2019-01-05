@@ -5,7 +5,7 @@
   <h2>Торговый день: <%= @trading_day.day %>/<%= @trading_day.month %>/<%= @trading_day.year %> | Магазин: <%= @trading_day.store.name %></h2>
   <p>Создал: <%= @trading_day.user.email %></p>
 
-  <%= form_for @trading_day, :url => url_for(:action => 'trade_item'), html: {class: 'navbar-form'} do |form| %>
+  <%= form_for @trading_day, url: url_for(:action => 'trade_item'), html: {class: 'navbar-form'} do |form| %>
     <%= form.label :item_ids, 'Код товара:' %>
     <%= form.text_field :item_ids, class: 'form-control', autofocus: true, value: '', size: 7 %>
     <%= form.submit "Продать", class: 'btn btn-primary' %>

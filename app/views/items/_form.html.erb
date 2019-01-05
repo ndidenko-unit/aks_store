@@ -1,8 +1,5 @@
 
-<div class="center-block" style="width: 640px; margin-top: 60px;">
-
-
-<%= form_with(model: item, local: true) do |form| %>
+<%= form_with(model: item, local: true, html: {class: 'navbar-form'}) do |form| %>
   <% if item.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(item.errors.count, "error") %> prohibited this item from being saved:</h2>
@@ -40,10 +37,9 @@
     <%= form.collection_select :status_id, Status.all, :id, :name %>
   </div>
 
-  <div class="actions">
+  <div class="form-group">
     <%= form.submit "Сохранить", class: 'btn btn-primary btn-block' %>
   </div>
 <% end %>
 
-</div>
 

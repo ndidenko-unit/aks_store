@@ -1,8 +1,20 @@
+
 <p id="notice"><%= notice %></p>
 
 <h1>Товары</h1>
-<a href="<%= new_item_path %>"><button type="button" class="btn btn-primary">Добавить новый товар</button></a>
-<br><br>
+
+<a href="javascript:void(0);" onclick="viewdiv('mydiv');">Добавить товар</a>
+<div id="mydiv" style="display:none;">
+  <%= render 'form', item: @item %>
+</div>
+
+
+<%= form_tag items_path, method: 'get', class: 'navbar-form' do %>
+  <div class="form-group"><%= label_tag :search, 'Поиск' %></div>
+  <div class="form-group"><%= text_field_tag :search, params[:search], class: 'form-control'%></div>
+  <div class="form-group"><%= submit_tag 'Search', name: nil, class: 'btn btn-primary btn-block' %></div>
+<% end %>
+
 <table class="table">
   <thead>
     <tr class="info">
