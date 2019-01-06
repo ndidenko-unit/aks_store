@@ -1,10 +1,11 @@
 class TradingDaysController < ApplicationController
-  before_action :set_trading_day, only: [:show, :edit, :update, :destroy, :trade_item, :add_expense, :close_day]
+  before_action :set_trading_day, only: [:show, :edit, :update, :destroy, :trade_item, :add_expense, :close_day, :if_day_close]
+  before_action :if_day_close, only: [:trade_item, :add_expense]
   before_action :authenticate_user!
   # GET /trading_days
   # GET /trading_days.json
   def index
-    @trading_days = TradingDay.all
+    @trading_days = TradingDay.all.paginate(page: params[:page], per_page: 20)
   end
 
   # GET /trading_days/1
@@ -107,5 +108,11 @@ class TradingDaysController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def trading_day_params
       params.require(:trading_day).permit(:day, :month, :year, :store_id, :user_id)
+    end
+
+    def if_day_close
+      if @trading_day.close?
+        redirect_to @trading_day, notice: "Торговый день уже закрыт."
+      end
     end
 end

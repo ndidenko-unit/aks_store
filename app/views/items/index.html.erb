@@ -14,12 +14,14 @@
 </div>
 
 <%= form_tag items_path, method: 'get', class: 'navbar-form' do %>
+  <div class="form-group"><div class="digg_pagination">
+    <%= will_paginate @items, :container => false %>
+  </div></div>
   <div class="form-group"><%= label_tag :search, 'Поиск' %></div>
   <div class="form-group"><%= text_field_tag :search, params[:search], class: 'form-control' %></div>
   <div class="form-group"><%= select_tag :status, options_for_select(@all_statuses, params[:status]), onchange: ('this.form.submit();'), class: 'form-control' %></div>
   <div class="form-group"><%= submit_tag 'Search', name: nil, class: 'btn btn-primary btn-block' %></div>
 <% end %>
-
 <table class="table">
   <thead>
     <tr class="info">

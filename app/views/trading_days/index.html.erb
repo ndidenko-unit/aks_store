@@ -3,6 +3,10 @@
 <h1>Trading Days</h1>
 <a href="<%= new_trading_day_path %>"><button type="button" class="btn btn-primary">Создать торговый день</button></a>
 <br><br>
+<div class="digg_pagination">
+  <%= will_paginate @items, :container => false %>
+</div>
+<br>
 <table class="table">
   <thead>
     <tr class="info">

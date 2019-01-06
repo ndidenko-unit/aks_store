@@ -9,7 +9,7 @@ class ItemsController < ApplicationController
     @items = []
     status_id = 0
     status_id = Status.find_by(name: params[:status]).id if params[:status].present? && params[:status] != 'Все товары'
-    @items = search_items(params[:search], status_id)
+    @items = search_items(params[:search], status_id).paginate(page: params[:page], per_page: 20)
     @all_statuses = Status.all.map(&:name).unshift('Все товары')
   end
 
