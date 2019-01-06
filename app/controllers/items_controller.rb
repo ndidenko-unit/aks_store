@@ -7,20 +7,10 @@ class ItemsController < ApplicationController
   def index
     @item = Item.new
     @items = []
-    @items = search_items(params[:search])
-  end
-
-  def search_items(search_params)
-    items = []
-    search_params ||= ''
-    items = Item.where(id: search_params) if search_params.scan(/\D/).empty?
-    items += Item.where("name ~* ?", search_params) unless search_params.blank?
-    items = Item.all if search_params.blank?
-    begin
-    items.reverse_order
-    rescue
-      items
-    end
+    status_id = 0
+    status_id = Status.find_by(name: params[:status]).id if params[:status].present? && params[:status] != 'Все товары'
+    @items = search_items(params[:search], status_id)
+    @all_statuses = Status.all.map(&:name).unshift('Все товары')
   end
 
   # GET /items/1
@@ -73,7 +63,6 @@ class ItemsController < ApplicationController
   end
 
   def cancel_sale
-    # binding.pry
     @trading_day = @item.trading_day
     @trading_day.items.delete(@item)
     status_stock = {status_id: 1}
@@ -83,12 +72,30 @@ class ItemsController < ApplicationController
 
   private
     # Use callbacks to share common setup or constraints between actions.
-    def set_item
-      @item = Item.find(params[:id])
+  def search_items(search_params, status_id)
+    items = []
+    search_params ||= ''
+    items = Item.where(id: search_params) if search_params.scan(/\D/).empty?
+    if status_id == 0
+      items += Item.where("name ~* ?", search_params) unless search_params.blank?
+      items = Item.all if search_params.blank?
+    else
+      items += Item.where(status_id: status_id).where("name ~* ?", search_params) unless search_params.blank?
+      items = Item.where(status_id: status_id) if search_params.blank?
     end
+    begin
+      items.reverse_order
+    rescue
+      items
+    end
+  end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def item_params
-      params.require(:item).permit(:name, :purchase, :retail, :store_id, :status_id)
-    end
+  def set_item
+    @item = Item.find(params[:id])
+  end
+
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def item_params
+    params.require(:item).permit(:name, :purchase, :retail, :store_id, :status_id)
+  end
 end

@@ -7,9 +7,9 @@ class TradingDay < ApplicationRecord
   # validates :store_id, uniqueness: { scope: [:day, :month, :year]}
   # validates [:day, :month, :year], uniqueness: { scope: :store_id }
   # validates_uniqueness_of :scopes => [:day, :month, :year, :store_id]
-  validate :equal_trading_day
+  validate :equal_trading_day, on: :create
 
-  def proceeds
+  def previously_proceeds
     self.items.inject(0){|sum,e| sum + e.retail }
   end
 
@@ -19,6 +19,18 @@ class TradingDay < ApplicationRecord
 
   def date_and_store
     "#{self.day}/#{self.month}/#{self.year} на #{self.store.name}"
+  end
+
+  def status
+    if self.proceeds == nil
+      'Выручка не сдана'
+    else
+      "Выручка сдана: #{self.proceeds} грн."
+    end
+  end
+
+  def close?
+    self.proceeds != nil
   end
 
   private

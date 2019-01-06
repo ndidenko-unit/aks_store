@@ -1,5 +1,5 @@
 class TradingDaysController < ApplicationController
-  before_action :set_trading_day, only: [:show, :edit, :update, :destroy, :trade_item, :add_expense]
+  before_action :set_trading_day, only: [:show, :edit, :update, :destroy, :trade_item, :add_expense, :close_day]
   before_action :authenticate_user!
   # GET /trading_days
   # GET /trading_days.json
@@ -68,7 +68,7 @@ class TradingDaysController < ApplicationController
         if @item.trading_day.present?
           redirect_to @trading_day, notice: "Товар #{@item.name} уже продан #{@item.trading_day.date_and_store}. #{view_context.link_to('Посмотреть день', @item.trading_day)}"; return
         elsif @item.store != @trading_day.store
-        redirect_to @trading_day, notice: "Товар #{view_context.link_to("#{@item.name}", @item)} закреплен за точкой #{@item.store.name}."; return
+          redirect_to @trading_day, notice: "Товар #{view_context.link_to("#{@item.name}", @item)} закреплен за точкой #{@item.store.name}."; return
         end
       status_sold = {status_id: 2}
       @item.update(status_sold)
@@ -85,6 +85,16 @@ class TradingDaysController < ApplicationController
       redirect_to @trading_day, notice: "Расход успешно добавлен."
     else
       redirect_to @trading_day, notice: "Неверно введены данные расхода."
+    end
+  end
+
+  def close_day
+    final_proceeds = @trading_day.previously_proceeds - @trading_day.all_expenses
+    @trading_day.update(proceeds: final_proceeds)
+    if @trading_day.proceeds != nil
+      redirect_to @trading_day, notice: "Выручка в сумме #{final_proceeds} грн. успешно сдана. Торговый день окончен!"
+    else
+      redirect_to @trading_day, notice: "Произошла ошибка. Выручка не обнаружена."
     end
   end
 

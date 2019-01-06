@@ -3,6 +3,6 @@ class Item < ApplicationRecord
   belongs_to :store
   belongs_to :trading_day, optional: true
 
-  validates :name, :purchase, :retail, :store_id, :status_id, presence: true
-  validates :purchase, :retail, numericality: true
+  validates :name, :retail, :store_id, :status_id, presence: true
+  validates :retail, numericality: true
  end

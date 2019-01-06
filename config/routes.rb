@@ -17,6 +17,7 @@ Rails.application.routes.draw do
     member do
       patch 'trade_item'
       post 'add_expense'
+      get 'close_day'
     end
   end
   root 'items#index'
