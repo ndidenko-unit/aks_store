@@ -9,4 +9,5 @@ class ExpensesController < ApplicationController
       redirect_to @expense.trading_day, notice: 'Расход успешно удален'
     end
   end
+
 end

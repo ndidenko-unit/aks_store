@@ -12,4 +12,13 @@ class User < ApplicationRecord
   def set_default_role
     self.role ||= :block
   end
+
+  def admin?
+    self.role == "admin"
+  end
+
+  def seller?
+    self.role == "seller"
+  end
+
 end

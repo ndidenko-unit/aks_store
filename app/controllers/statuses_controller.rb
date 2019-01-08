@@ -1,7 +1,7 @@
 class StatusesController < ApplicationController
   before_action :set_status, only: [:show, :edit, :update, :destroy]
   before_action :authenticate_user!
-  before_action :blocked_user!
+  before_action :blocked_user!, :only_for_admin!
   # GET /statuses
   # GET /statuses.json
   def index

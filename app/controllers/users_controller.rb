@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
 
   before_action :authenticate_user!
-  before_action :blocked_user!
+  before_action :blocked_user!, :only_for_admin!
 
   def admin
     @users = User.all
@@ -12,6 +12,5 @@ class UsersController < ApplicationController
     @user = User.find(params[:user_id])
     @user.update_attribute :role, params[:role]
   end
-
 
 end

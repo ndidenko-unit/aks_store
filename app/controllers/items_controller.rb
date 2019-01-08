@@ -2,6 +2,7 @@ class ItemsController < ApplicationController
   before_action :set_item, only: [:show, :edit, :update, :destroy, :cancel_sale]
   before_action :authenticate_user!
   before_action :blocked_user!
+  before_action :only_for_admin!, only: [:edit, :update, :destroy]
 
   # GET /items
   # GET /items.json
@@ -89,7 +90,7 @@ class ItemsController < ApplicationController
       items = Item.where(status_id: status_id) if search_params.blank?
     end
     begin
-      items.reverse_order.paginate(page: params[:page], per_page: 20)
+      items.reverse_order.paginate(page: params[:page], per_page: 2)
     rescue
       items
     end

@@ -2,6 +2,8 @@ class StoresController < ApplicationController
   before_action :set_store, only: [:show, :edit, :update, :destroy]
   before_action :authenticate_user!
   before_action :blocked_user!
+  before_action :only_for_admin!
+
   # GET /stores
   # GET /stores.json
   def index
