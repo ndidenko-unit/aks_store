@@ -1,0 +1,26 @@
+<table class="table">
+  <thead>
+  <tr class="info">
+    <th>ID</th>
+    <th>Логин</th>
+    <th>Роль</th>
+    <th>Сменить роль</th>
+  </tr>
+  </thead>
+
+  <tbody>
+  <% @users.each do |user| %>
+    <tr>
+      <td><%= user.id %></td>
+      <td><%= user.email %></td>
+      <td><%= user.role %></td>
+      <td>
+        <%= form_tag admin_path, method: 'post' do  %>
+          <%= hidden_field_tag :user_id, user.id %>
+          <%= select_tag :role, options_for_select(@roles, user.role), onchange: ('this.form.submit();'), class: 'form-control' %>
+        <% end %>
+      </td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>

@@ -1,7 +1,9 @@
 class TradingDaysController < ApplicationController
-  before_action :set_trading_day, only: [:show, :edit, :update, :destroy, :trade_item, :add_expense, :close_day, :if_day_close]
+  before_action :set_trading_day, only: [:show, :edit, :update, :destroy, :trade_item,
+                                         :add_expense, :close_day, :if_day_close, :unblock_day]
   before_action :if_day_close, only: [:trade_item, :add_expense]
   before_action :authenticate_user!
+  before_action :blocked_user!
   # GET /trading_days
   # GET /trading_days.json
   def index
@@ -97,6 +99,11 @@ class TradingDaysController < ApplicationController
     else
       redirect_to @trading_day, notice: "Произошла ошибка. Выручка не обнаружена."
     end
+  end
+
+  def unblock_day
+    @trading_day.unblock
+    redirect_to @trading_day, notice: "Торговый день разблокирован."
   end
 
   private

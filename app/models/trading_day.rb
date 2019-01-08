@@ -33,6 +33,10 @@ class TradingDay < ApplicationRecord
     self.proceeds != nil
   end
 
+  def unblock
+    self.update(proceeds: nil)
+  end
+
   private
 
   def equal_trading_day

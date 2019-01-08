@@ -21,5 +21,6 @@ Item.create(name: 'HTC', purchase: 5.40, retail: 600, status_id: 3, store_id: 3)
 User.create(
     email: "5773480@gmail.com",
     password: 5956861,
-    password_confirmation: 5956861
+    password_confirmation: 5956861,
+    role: :admin
 )

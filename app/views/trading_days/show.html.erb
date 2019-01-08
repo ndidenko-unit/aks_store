@@ -93,6 +93,7 @@
 <br><br>
 <% if @trading_day.close? %>
   <%= "Торговый день успешно окончен. Выручка в сумме #{@trading_day.proceeds} сдана." %>
+  <%= link_to '(Разблокировать торговый день)', unblock_day_trading_day_path(@trading_day), data: { confirm: 'Вы уверены?' } %>
 <% else %>
   <%= link_to 'Закончить торговлю и сдать выручку', close_day_trading_day_path(@trading_day), data: { confirm: 'Вы уверены?' } %>
 <% end %>

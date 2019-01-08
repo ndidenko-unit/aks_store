@@ -1,6 +1,7 @@
 class ItemsController < ApplicationController
   before_action :set_item, only: [:show, :edit, :update, :destroy, :cancel_sale]
   before_action :authenticate_user!
+  before_action :blocked_user!
 
   # GET /items
   # GET /items.json
@@ -64,10 +65,14 @@ class ItemsController < ApplicationController
 
   def cancel_sale
     @trading_day = @item.trading_day
-    @trading_day.items.delete(@item)
-    status_stock = {status_id: 1}
-    @item.update(status_stock)
-    redirect_to @trading_day, notice: 'Продажа отменена.'
+    if @trading_day.close?
+      redirect_to @trading_day, notice: 'Торговый день закрыт.'
+    else
+      @trading_day.items.delete(@item)
+      status_stock = {status_id: 1}
+      @item.update(status_stock)
+      redirect_to @trading_day, notice: 'Продажа отменена.'
+    end
   end
 
   private
