@@ -6,6 +6,7 @@ class User < ApplicationRecord
 
   has_many :trading_days
   has_many :items
+  has_many :expenses
 
   enum role: [:block, :seller, :admin]
   after_initialize :set_default_role, :if => :new_record?

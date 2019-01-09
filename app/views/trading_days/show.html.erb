@@ -29,6 +29,7 @@
         <th>Закреплен</th>
         <th>Статус</th>
         <th>Время</th>
+        <th>Продавец</th>
         <th colspan="3"></th>
       </tr>
     </thead>
@@ -43,6 +44,7 @@
           <td><%= item.store.name %></td>
           <td><%= item.status.name %></td>
           <td><%= item.updated_at + 2*60*60 %></td>
+          <td><%= item.user.email %></td>
           <td><%= link_to 'Просмотреть', item %></td>
           <td><%= link_to 'Изменить', edit_item_path(item) %></td>
           <td><%= link_to 'Удалить', cancel_sale_item_path(item), data: { confirm: 'Are you sure?' } %></td>
@@ -63,6 +65,7 @@
       <th>Причина расхода</th>
       <th>Сумма расхода</th>
       <th>Время</th>
+      <th>Продавец</th>
       <th colspan="3"></th>
     </tr>
     </thead>
@@ -73,6 +76,7 @@
         <td><%= expense.comment %></td>
         <td><%= expense.sum %></td>
         <td><%= expense.updated_at + 2*60*60 %></td>
+        <td><%= expense.user.email %></td>
         <td><%= link_to 'Удалить', expense, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
@@ -93,7 +97,7 @@
 <br><br>
 <% if @trading_day.close? %>
   <%= "Торговый день успешно окончен. Выручка в сумме #{@trading_day.proceeds} сдана." %>
-  <%= link_to '(Разблокировать торговый день)', unblock_day_trading_day_path(@trading_day), data: { confirm: 'Вы уверены?' } %>
+  <%= link_to '(Разблокировать торговый день)', unblock_day_trading_day_path(@trading_day), data: { confirm: 'Вы уверены?' }  %>
 <% else %>
   <%= link_to 'Закончить торговлю и сдать выручку', close_day_trading_day_path(@trading_day), data: { confirm: 'Вы уверены?' } %>
 <% end %>

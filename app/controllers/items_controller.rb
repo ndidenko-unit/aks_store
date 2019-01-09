@@ -76,7 +76,7 @@ class ItemsController < ApplicationController
       redirect_to @trading_day, notice: 'Торговый день закрыт.'
     else
       @trading_day.items.delete(@item)
-      status_stock = {status_id: 1}
+      status_stock = {status_id: 1, user_id: current_user.id}
       @item.update(status_stock)
       redirect_to @trading_day, notice: 'Продажа отменена.'
     end

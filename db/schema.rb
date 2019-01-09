@@ -19,9 +19,11 @@ ActiveRecord::Schema.define(version: 2019_01_09_155502) do
     t.float "sum"
     t.string "comment"
     t.bigint "trading_day_id"
+    t.bigint "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["trading_day_id"], name: "index_expenses_on_trading_day_id"
+    t.index ["user_id"], name: "index_expenses_on_user_id"
   end
 
   create_table "items", force: :cascade do |t|
