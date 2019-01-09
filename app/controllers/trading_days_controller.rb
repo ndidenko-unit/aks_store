@@ -4,6 +4,7 @@ class TradingDaysController < ApplicationController
   before_action :if_day_close, only: [:trade_item, :add_expense]
   before_action :authenticate_user!
   before_action :blocked_user!
+  before_action :only_for_admin, only: [:destroy]
   # GET /trading_days
   # GET /trading_days.json
   def index
@@ -32,7 +33,7 @@ class TradingDaysController < ApplicationController
 
     respond_to do |format|
       if @trading_day.save
-        format.html { redirect_to @trading_day, notice: 'Trading day was successfully created.' }
+        format.html { redirect_to @trading_day, notice: 'Торговый день был успешно создан.' }
         format.json { render :show, status: :created, location: @trading_day }
       else
         format.html { render :new }
@@ -46,7 +47,7 @@ class TradingDaysController < ApplicationController
   def update
     respond_to do |format|
       if @trading_day.update(trading_day_params)
-        format.html { redirect_to @trading_day, notice: 'Trading day was successfully updated.' }
+        format.html { redirect_to @trading_day, notice: 'Торговый день был успешно обновлен.' }
         format.json { render :show, status: :ok, location: @trading_day }
       else
         format.html { render :edit }
@@ -60,7 +61,7 @@ class TradingDaysController < ApplicationController
   def destroy
     @trading_day.destroy
     respond_to do |format|
-      format.html { redirect_to trading_days_url, notice: 'Trading day was successfully destroyed.' }
+      format.html { redirect_to trading_days_url, notice: 'Торговый день был успешно удален.' }
       format.json { head :no_content }
     end
   end

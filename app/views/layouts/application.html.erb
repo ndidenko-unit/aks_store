@@ -11,22 +11,22 @@
   </head>
 
   <body>
-    <div class="col-md-10">
+    <div>
       <ul class="nav nav-tabs">
 
         <li role="presentation" <%='class=active' if current_page?(items_path) %>><a href="<%= items_path %>">Управление товарами</a></li>
         <li role="presentation" <%='class=active' if current_page?(statuses_path) %>><a href="<%= statuses_path %>">Управление статусами</a></li>
-        <li role="presentation" <%='class=active' if current_page?(stores_path) %>><a href="<%= stores_path %>">Управление точками</a></li>
+        <li role="presentation" <%='class=active' if current_page?(stores_path) %>><a href="<%= stores_path %>">Управление магазинами</a></li>
         <li role="presentation" <%='class=active' if current_page?(trading_days_path) %>><a href="<%= trading_days_path %>">Торговые дни</a></li>
       </ul>
   </div>
-  <div class="col-md-2">
+  <div class="pull-right">
     <% if user_signed_in? %>
-      <p>Welcome, <%= current_user.email %></p>
-      <p><%= link_to 'Смена пароля', edit_user_registration_path %> | <%= link_to 'Роли', admin_path %></p>
-      <p><%= link_to 'Logout', destroy_user_session_path, :method => :delete %></p>
+      <p>Привет, <%= current_user.email %> |
+      <%= link_to 'Смена пароля', edit_user_registration_path %> | <%= link_to 'Роли', admin_path %> |
+      <%= link_to 'Выйти из системы', destroy_user_session_path, :method => :delete %></p>
     <% else %>
-      <p><%= link_to 'Login', new_user_session_path %> или <%= link_to 'Sign up', new_user_registration_path %></p>
+      <p><%= link_to 'Войти в систему', new_user_session_path %> или <%= link_to 'Sign up', new_user_registration_path %></p>
     <% end %>
   </div>
 <br><br>

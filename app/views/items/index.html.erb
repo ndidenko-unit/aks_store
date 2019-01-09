@@ -1,15 +1,13 @@
-
 <p id="notice"><%= notice %></p>
 
 <% if current_user.admin? %>
-<div class="row">
-  <div class="col-md-1"></div>
-  <div class="col-md-11">
+<div class="container">
+  <div class="col-lg-10 col-lg-offset-5">
     <h1>Товары</h1>
     <a href="javascript:void(0);" onclick="viewdiv('mydiv');">Добавить товар</a>
-    <div id="mydiv" style="display:none;">
-      <%= render 'form', item: @item %>
-    </div>
+  </div>
+  <div id="mydiv" style="display:none;">
+    <%= render 'form', item: @item %>
   </div>
 </div>
 <% end %>

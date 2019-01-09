@@ -17,7 +17,8 @@
       <td>
         <%= form_tag admin_path, method: 'post' do  %>
           <%= hidden_field_tag :user_id, user.id %>
-          <%= select_tag :role, options_for_select(@roles, user.role), onchange: ('this.form.submit();'), class: 'form-control' %>
+          <%= select_tag :role, options_for_select(@roles, user.role),
+                         onchange: ('this.form.submit();'), class: 'form-control' if user != current_user %>
         <% end %>
       </td>
     </tr>

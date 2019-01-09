@@ -1,5 +1,5 @@
 
-<%= form_with(model: item, local: true, html: {class: 'navbar-form'}) do |form| %>
+<%= form_with(model: item, local: true, html: {class: 'form'}) do |form| %>
   <% if item.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(item.errors.count, "error") %> prohibited this item from being saved:</h2>
@@ -26,7 +26,7 @@
     <%= form.label :retail, "Цена продажи" %>
     <%= form.text_field :retail, class: 'form-control', size: 5 %>
   </div>
-
+<br>
   <div class="form-group">
     <%= form.label :store_id, "Закрепить за" %>
     <%= form.collection_select :store_id, Store.all, :id, :name %>

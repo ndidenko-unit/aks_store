@@ -90,7 +90,7 @@ class ItemsController < ApplicationController
       items = Item.where(status_id: status_id) if search_params.blank?
     end
     begin
-      items.reverse_order.paginate(page: params[:page], per_page: 2)
+      items.reverse_order.paginate(page: params[:page], per_page: 20)
     rescue
       items
     end
