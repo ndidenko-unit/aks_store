@@ -47,6 +47,8 @@ class TradingDay < ApplicationRecord
   end
 
   def update_equal_trading_day
+    trading_day = TradingDay.where(day: day, month: month, year: year, store_id: store_id)
+    return if !trading_day.present?
     if TradingDay.where(day: day, month: month, year: year, store_id: store_id).first.id != self.id
       errors.add(:base, 'Такой торговый день уже существует')
     end

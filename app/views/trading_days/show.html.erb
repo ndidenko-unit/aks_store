@@ -2,14 +2,21 @@
 <div class="container">
   <div class="jumbotron">
     <h2>Торговый день: <%= @trading_day.day %>/<%= @trading_day.month %>/<%= @trading_day.year %> | Магазин: <%= @trading_day.store.name %></h2>
-    <p>Создал: <%= @trading_day.user.email %></p>
+    <p>Продавец: <%= @trading_day.user.email %> (<a href="javascript:void(0);" onclick="viewdiv('change_seller');">Передать торговлю</a>)</p>
+
+    <div id="change_seller" style="display:none;">
+      <%= form_tag change_seller_trading_day_path, method: 'post' do  %>
+        <%= select_tag :seller, options_for_select(@users_for_select, current_user.email),
+                       onchange: ('this.form.submit();'), class: 'form-control' %>
+      <% end %>
+    </div>
     <%= form_for @trading_day, url: url_for(action: 'trade_item'), html: {class: 'navbar-form'} do |form| %>
       <%= form.label :item_ids, 'Код товара:' %>
       <%= form.text_field :item_ids, class: 'form-control', autofocus: true, value: '', size: 7 %>
       <%= form.submit "Продать", class: 'btn btn-primary' %>
     <% end %>
-    <a href="javascript:void(0);" onclick="viewdiv('mydiv');">Продать товар без кода</a>
-    <div id="mydiv" style="display:none;">
+    <a href="javascript:void(0);" onclick="viewdiv('without_code');">Продать товар без кода</a>
+    <div id="without_code" style="display:none;">
       <%= form_for @trading_day, url: url_for(action: 'trade_item_without_code'), html: {class: 'navbar-form'} do |form| %>
         <%= form.label :name, 'Название товара:' %>
         <%= form.text_field :name, class: 'form-control', autofocus: true, value: '', size: 50 %>

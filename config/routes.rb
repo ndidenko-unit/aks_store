@@ -18,6 +18,7 @@ Rails.application.routes.draw do
       patch 'trade_item'
       patch 'trade_item_without_code'
       post 'add_expense'
+      post 'change_seller'
       get 'close_day'
       get 'unblock_day'
     end

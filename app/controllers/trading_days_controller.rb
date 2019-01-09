@@ -1,10 +1,11 @@
 class TradingDaysController < ApplicationController
   before_action :set_trading_day, only: [:show, :edit, :update, :destroy, :trade_item, :trade_item_without_code,
-                                         :add_expense, :close_day, :if_day_close, :unblock_day]
+                                         :add_expense, :close_day, :if_day_close, :unblock_day, :only_for_creator!, :change_seller]
   before_action :if_day_close, only: [:trade_item, :add_expense]
   before_action :authenticate_user!
   before_action :blocked_user!
   before_action :only_for_admin!, only: [:destroy, :unblock_day]
+  before_action :only_for_creator!, only: [:show, :edit, :update]
   # GET /trading_days
   # GET /trading_days.json
   def index
@@ -15,6 +16,7 @@ class TradingDaysController < ApplicationController
   # GET /trading_days/1.json
   def show
     @expense = Expense.new
+    @users_for_select = User.all.collect(&:email)
   end
 
   # GET /trading_days/new
@@ -114,6 +116,16 @@ class TradingDaysController < ApplicationController
     end
   end
 
+  def change_seller
+    seller = User.find_by email: params[:seller]
+    @trading_day.user = seller
+    if @trading_day.save
+      redirect_to root_path, notice: "Торговля успешно передана продавцу #{@trading_day.user.email} ."
+    else
+      redirect_to @trading_day, notice: "Торговля не была передана. Произошла ошибка."
+    end
+  end
+
   def unblock_day
     @trading_day.unblock
     redirect_to @trading_day, notice: "Торговый день разблокирован."
@@ -133,6 +145,12 @@ class TradingDaysController < ApplicationController
     def if_day_close
       if @trading_day.close?
         redirect_to @trading_day, notice: "Торговый день уже закрыт."
+      end
+    end
+
+    def only_for_creator!
+      if current_user != @trading_day.user && current_user.role != "admin"
+        redirect_to trading_days_path, notice: 'У вас нет прав на этот торговый день'
       end
     end
 end
