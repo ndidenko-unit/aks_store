@@ -35,6 +35,7 @@
   <div class="form-group">
     <%= form.label :status_id, "Статус товара" %>
     <%= form.collection_select :status_id, Status.all, :id, :name %>
+    <%= form.hidden_field :user_id, value: current_user.id %>
   </div>
 
   <div class="form-group">

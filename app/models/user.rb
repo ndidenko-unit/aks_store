@@ -5,6 +5,7 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
 
   has_many :trading_days
+  has_many :items
 
   enum role: [:block, :seller, :admin]
   after_initialize :set_default_role, :if => :new_record?

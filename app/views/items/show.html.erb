@@ -29,3 +29,39 @@
 <%= link_to 'Изменить', edit_item_path(@item) %> |
 <%= link_to 'Назад', items_path %>
 </div>
+
+<table class="table">
+  <thead>
+  <tr class="info">
+    <th>ID</th>
+    <th>Название</th>
+    <th>Закупка $</th>
+    <th>Цена</th>
+    <th>Закреплен</th>
+    <th>Статус</th>
+    <th>Дата изменения</th>
+    <th>Автор изменений</th>
+  </tr>
+  </thead>
+
+  <tbody>
+  <% @versions.each do |item| %>
+    <tr
+      <% if item.status.name == 'Продан' %>
+      class="success"
+      <% elsif item.status.name == 'Брак' %>
+      class="danger"
+      <% end %>
+      >
+      <td><%= item.id %></td>
+      <td><%= item.name %></td>
+      <td><%= item.purchase %></td>
+      <td><%= item.retail %></td>
+      <td><%= item.store.name %></td>
+      <td><%= item.status.name %></td>
+      <td><%= item.updated_at + 2*60*60 %></td>
+      <td><%= item.user.email %></td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>

@@ -2,7 +2,7 @@ class ItemsController < ApplicationController
   before_action :set_item, only: [:show, :edit, :update, :destroy, :cancel_sale]
   before_action :authenticate_user!
   before_action :blocked_user!
-  before_action :only_for_admin!, only: [:edit, :update, :destroy]
+  before_action :only_for_admin!, only: [:destroy]
 
   # GET /items
   # GET /items.json
@@ -18,6 +18,12 @@ class ItemsController < ApplicationController
   # GET /items/1
   # GET /items/1.json
   def show
+    tmp_version = @item
+    @versions = []
+    while !tmp_version.nil?
+      @versions << tmp_version
+      tmp_version = tmp_version.paper_trail.previous_version
+    end
   end
 
   # GET /items/new
@@ -102,6 +108,6 @@ class ItemsController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def item_params
-    params.require(:item).permit(:name, :purchase, :retail, :store_id, :status_id)
+    params.require(:item).permit(:name, :purchase, :retail, :store_id, :status_id, :user_id)
   end
 end

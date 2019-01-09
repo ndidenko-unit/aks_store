@@ -28,6 +28,7 @@ gem 'pry'
 gem 'russian', '~> 0.6.0'
 gem 'jquery-rails'
 gem 'will_paginate', '~> 3.1.0'
+gem 'paper_trail'
 # Use Redis adapter to run Action Cable in production
 # gem 'redis', '~> 4.0'
 # Use ActiveModel has_secure_password

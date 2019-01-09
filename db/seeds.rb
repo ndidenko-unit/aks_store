@@ -14,9 +14,9 @@ Store.create(name: 'Точка 1')
 Store.create(name: 'Точка 2')
 Store.create(name: 'Склад')
 
-Item.create(name: 'Iphone', purchase: 7.80, retail: 400, status_id: 1, store_id: 1)
-Item.create(name: 'Samsung', purchase: 8.30, retail: 500, status_id: 2, store_id: 2)
-Item.create(name: 'HTC', purchase: 5.40, retail: 600, status_id: 3, store_id: 3)
+Item.create(name: 'Iphone', purchase: 7.80, retail: 400, status_id: 1, store_id: 1, user_id: 1)
+Item.create(name: 'Samsung', purchase: 8.30, retail: 500, status_id: 2, store_id: 2, user_id: 1)
+Item.create(name: 'HTC', purchase: 5.40, retail: 600, status_id: 3, store_id: 3, user_id: 1)
 
 User.create(
     email: "5773480@gmail.com",

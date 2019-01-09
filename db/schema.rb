@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_01_08_143115) do
+ActiveRecord::Schema.define(version: 2019_01_09_155502) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -30,12 +30,14 @@ ActiveRecord::Schema.define(version: 2019_01_08_143115) do
     t.float "retail"
     t.bigint "status_id"
     t.bigint "store_id"
+    t.bigint "user_id"
     t.bigint "trading_day_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["status_id"], name: "index_items_on_status_id"
     t.index ["store_id"], name: "index_items_on_store_id"
     t.index ["trading_day_id"], name: "index_items_on_trading_day_id"
+    t.index ["user_id"], name: "index_items_on_user_id"
   end
 
   create_table "statuses", force: :cascade do |t|
@@ -74,6 +76,17 @@ ActiveRecord::Schema.define(version: 2019_01_08_143115) do
     t.integer "role"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+  end
+
+  create_table "versions", force: :cascade do |t|
+    t.string "item_type", null: false
+    t.integer "item_id", null: false
+    t.string "event", null: false
+    t.string "whodunnit"
+    t.text "object"
+    t.datetime "created_at"
+    t.text "object_changes"
+    t.index ["item_type", "item_id"], name: "index_versions_on_item_type_and_item_id"
   end
 
 end

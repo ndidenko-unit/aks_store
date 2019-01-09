@@ -6,6 +6,7 @@ class CreateItems < ActiveRecord::Migration[5.2]
       t.float :retail
       t.belongs_to :status, index: true
       t.belongs_to :store, index: true
+      t.belongs_to :user, index: true
       t.belongs_to :trading_day, index: true
       t.timestamps
     end

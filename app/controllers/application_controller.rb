@@ -1,5 +1,7 @@
 class ApplicationController < ActionController::Base
 
+  before_action :set_paper_trail_whodunnit
+
   def blocked_user!
     if current_user.role == "block"
       sign_out
