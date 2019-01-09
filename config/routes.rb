@@ -16,6 +16,7 @@ Rails.application.routes.draw do
   resources :trading_days do
     member do
       patch 'trade_item'
+      patch 'trade_item_without_code'
       post 'add_expense'
       get 'close_day'
       get 'unblock_day'

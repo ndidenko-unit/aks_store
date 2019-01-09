@@ -1,5 +1,5 @@
 class TradingDaysController < ApplicationController
-  before_action :set_trading_day, only: [:show, :edit, :update, :destroy, :trade_item,
+  before_action :set_trading_day, only: [:show, :edit, :update, :destroy, :trade_item, :trade_item_without_code,
                                          :add_expense, :close_day, :if_day_close, :unblock_day]
   before_action :if_day_close, only: [:trade_item, :add_expense]
   before_action :authenticate_user!
@@ -80,6 +80,17 @@ class TradingDaysController < ApplicationController
       redirect_to @trading_day, notice: "Товар #{@item.name} добавлен в список продаж."
     rescue
       redirect_to @trading_day, notice: "Товар с таким кодом не найден."
+    end
+  end
+
+  def trade_item_without_code
+    @item = Item.new(name: params[:trading_day][:name], retail: params[:trading_day][:price],
+                        status_id: 2, user_id: current_user.id, store_id: @trading_day.store.id,
+                        trading_day_id: @trading_day.id)
+    if @item.save
+      redirect_to @trading_day, notice: "Укажите на товаре код: #{@item.id} <br> Товар #{@item.name} добавлен в список продаж."
+    else
+      redirect_to @trading_day, notice: "Товар не был создан. Проверьте наличие цены и названия."
     end
   end
 

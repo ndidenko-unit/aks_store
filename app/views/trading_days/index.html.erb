@@ -22,7 +22,11 @@
 
   <tbody>
     <% @trading_days.each do |trading_day| %>
-      <tr>
+    <tr
+      <% if trading_day.proceeds != nil %>
+      class="success"
+      <% end %>
+      >
         <td><%= trading_day.day %></td>
         <td><%= trading_day.month %></td>
         <td><%= trading_day.year %></td>

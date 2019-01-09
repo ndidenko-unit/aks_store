@@ -1,16 +1,24 @@
 <br>
 <div class="container">
-<div class="jumbotron">
-
-  <h2>Торговый день: <%= @trading_day.day %>/<%= @trading_day.month %>/<%= @trading_day.year %> | Магазин: <%= @trading_day.store.name %></h2>
-  <p>Создал: <%= @trading_day.user.email %></p>
-
-  <%= form_for @trading_day, url: url_for(action: 'trade_item'), html: {class: 'navbar-form'} do |form| %>
-    <%= form.label :item_ids, 'Код товара:' %>
-    <%= form.text_field :item_ids, class: 'form-control', autofocus: true, value: '', size: 7 %>
-    <%= form.submit "Продать", class: 'btn btn-primary' %>
-    <p id="notice"><%= notice.html_safe if notice.present? %></p>
-  <% end %>
+  <div class="jumbotron">
+    <h2>Торговый день: <%= @trading_day.day %>/<%= @trading_day.month %>/<%= @trading_day.year %> | Магазин: <%= @trading_day.store.name %></h2>
+    <p>Создал: <%= @trading_day.user.email %></p>
+    <%= form_for @trading_day, url: url_for(action: 'trade_item'), html: {class: 'navbar-form'} do |form| %>
+      <%= form.label :item_ids, 'Код товара:' %>
+      <%= form.text_field :item_ids, class: 'form-control', autofocus: true, value: '', size: 7 %>
+      <%= form.submit "Продать", class: 'btn btn-primary' %>
+    <% end %>
+    <a href="javascript:void(0);" onclick="viewdiv('mydiv');">Продать товар без кода</a>
+    <div id="mydiv" style="display:none;">
+      <%= form_for @trading_day, url: url_for(action: 'trade_item_without_code'), html: {class: 'navbar-form'} do |form| %>
+        <%= form.label :name, 'Название товара:' %>
+        <%= form.text_field :name, class: 'form-control', autofocus: true, value: '', size: 50 %>
+        <%= form.label :price, 'Цена:' %>
+        <%= form.text_field :price, class: 'form-control', autofocus: true, value: '', size: 7 %>
+        <%= form.submit "Продать товар без кода", class: 'btn btn-primary' %>
+        <p id="notice"><%= notice.html_safe if notice.present? %></p>
+      <% end %>
+    </div>
   </div>
 </div>
 <center>
