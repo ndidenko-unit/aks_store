@@ -2,6 +2,7 @@ Rails.application.routes.draw do
   devise_for :users
   get 'admin', action: :admin, controller: 'users'
   post 'admin', action: :change_role, controller: 'users'
+  get 'my_day', action: :my_day, controller: 'trading_days'
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
   resources :items do
     member do

@@ -81,7 +81,7 @@ class TradingDaysController < ApplicationController
       @trading_day.items << @item
       redirect_to @trading_day, notice: "Товар #{@item.name} добавлен в список продаж."
     rescue
-      redirect_to @trading_day, notice: "Товар с таким кодом не найден."
+      redirect_to @trading_day, notice: 'Товар с таким кодом не найден.'
     end
   end
 
@@ -92,7 +92,7 @@ class TradingDaysController < ApplicationController
     if @item.save
       redirect_to @trading_day, notice: "Укажите на товаре код: #{@item.id} <br> Товар #{@item.name} добавлен в список продаж."
     else
-      redirect_to @trading_day, notice: "Товар не был создан. Проверьте наличие цены и названия."
+      redirect_to @trading_day, notice: 'Товар не был создан. Проверьте наличие цены и названия.'
     end
   end
 
@@ -100,9 +100,9 @@ class TradingDaysController < ApplicationController
     @expense = Expense.create(sum: params[:expense][:sum], comment: params[:expense][:comment],
                               trading_day_id: @trading_day.id, user_id: current_user.id)
     if @expense.id.present?
-      redirect_to @trading_day, notice: "Расход успешно добавлен."
+      redirect_to @trading_day, notice: 'Расход успешно добавлен.'
     else
-      redirect_to @trading_day, notice: "Неверно введены данные расхода."
+      redirect_to @trading_day, notice: 'Неверно введены данные расхода.'
     end
   end
 
@@ -112,7 +112,7 @@ class TradingDaysController < ApplicationController
     if @trading_day.proceeds != nil
       redirect_to @trading_day, notice: "Выручка в сумме #{@trading_day.proceeds} грн. успешно сдана. Торговый день окончен!"
     else
-      redirect_to @trading_day, notice: "Произошла ошибка. Выручка не обнаружена."
+      redirect_to @trading_day, notice: 'Произошла ошибка. Выручка не обнаружена.'
     end
   end
 
@@ -120,15 +120,26 @@ class TradingDaysController < ApplicationController
     seller = User.find_by email: params[:seller]
     @trading_day.user = seller
     if @trading_day.save
-      redirect_to root_path, notice: "Торговля успешно передана продавцу #{@trading_day.user.email} ."
+      redirect_to root_path, notice: "Торговля успешно передана продавцу #{@trading_day.user.email}."
     else
-      redirect_to @trading_day, notice: "Торговля не была передана. Произошла ошибка."
+      redirect_to @trading_day, notice: 'Торговля не была передана. Произошла ошибка.'
     end
   end
 
   def unblock_day
     @trading_day.unblock
-    redirect_to @trading_day, notice: "Торговый день разблокирован."
+    redirect_to @trading_day, notice: 'Торговый день разблокирован.'
+  end
+
+  def my_day
+    @my_day = TradingDay.where(user_id: current_user.id, proceeds: nil)
+    if @my_day.count == 1
+      redirect_to @my_day.last
+    elsif @my_day.count > 1
+      redirect_to trading_days_path, notice: 'У вас несколько открытых дней.'
+    else
+      redirect_to trading_days_path, notice: 'Ваш торговый день не определен.'
+    end
   end
 
   private
@@ -144,7 +155,7 @@ class TradingDaysController < ApplicationController
 
     def if_day_close
       if @trading_day.close?
-        redirect_to @trading_day, notice: "Торговый день уже закрыт."
+        redirect_to @trading_day, notice: 'Торговый день уже закрыт.'
       end
     end
 
