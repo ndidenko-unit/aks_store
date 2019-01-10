@@ -7,7 +7,7 @@ class TradingDay < ApplicationRecord
   # validates :store_id, uniqueness: { scope: [:day, :month, :year]}
   # validates [:day, :month, :year], uniqueness: { scope: :store_id }
   # validates_uniqueness_of :scopes => [:day, :month, :year, :store_id]
-  validate :equal_trading_day, on: [:create]
+  validate :equal_trading_day, :not_closed_day, on: [:create]
   validate :update_equal_trading_day, on: [:update]
 
   def previously_proceeds
@@ -39,6 +39,12 @@ class TradingDay < ApplicationRecord
   end
 
   private
+
+  def not_closed_day
+    if TradingDay.where(user_id: self.user_id, proceeds: nil).present?
+      errors.add(:base, 'У вас есть незакрытые торговые дни')
+    end
+  end
 
   def equal_trading_day
     if TradingDay.where(day: day, month: month, year: year, store_id: store_id).present?

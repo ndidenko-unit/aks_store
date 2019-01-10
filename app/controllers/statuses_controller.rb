@@ -51,6 +51,10 @@ class StatusesController < ApplicationController
   # DELETE /statuses/1
   # DELETE /statuses/1.json
   def destroy
+    if @status.id = 1..3
+      redirect_to statuses_path, notice: 'Статусы "В наличии", "Продан" и "Брак" запрещено удалять!'
+      return
+    end
     @status.destroy
     respond_to do |format|
       format.html { redirect_to statuses_url, notice: 'Status was successfully destroyed.' }

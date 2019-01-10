@@ -9,7 +9,7 @@ class TradingDaysController < ApplicationController
   # GET /trading_days
   # GET /trading_days.json
   def index
-    @trading_days = TradingDay.all.paginate(page: params[:page], per_page: 20)
+    @trading_days = TradingDay.all.reverse_order.paginate(page: params[:page], per_page: 20)
   end
 
   # GET /trading_days/1

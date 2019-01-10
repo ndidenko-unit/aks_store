@@ -10,11 +10,6 @@ class StoresController < ApplicationController
     @stores = Store.all
   end
 
-  # GET /stores/1
-  # GET /stores/1.json
-  def show
-  end
-
   # GET /stores/new
   def new
     @store = Store.new

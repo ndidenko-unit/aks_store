@@ -1,4 +1,4 @@
-<p id="notice"><%= notice %></p>
+
 
 <h1>Торговые точки и склады</h1>
 <a href="<%= new_store_path %>"><button type="button" class="btn btn-primary">Добавить новое место</button></a>
@@ -7,7 +7,7 @@
   <thead>
     <tr class="info">
       <th>Name</th>
-      <th colspan="3"></th>
+      <th colspan="2"></th>
     </tr>
   </thead>
 
@@ -15,9 +15,8 @@
     <% @stores.each do |store| %>
       <tr>
         <td><%= store.name %></td>
-        <td><%= link_to 'Show', store %></td>
-        <td><%= link_to 'Edit', edit_store_path(store) %></td>
-        <td><%= link_to 'Destroy', store, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to 'Изменить', edit_store_path(store) %></td>
+        <td><%= link_to 'Удалить', store, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
   </tbody>

@@ -9,7 +9,6 @@
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
-
   <body>
     <div>
       <ul class="nav nav-tabs">
@@ -30,6 +29,9 @@
     <% end %>
   </div>
 <br><br>
+    <% if notice.present? %>
+    <div class="alert alert-danger"><p id="notice"><%= notice %></p></div>
+    <% end %>
     <%= yield %>
   </body>
 </html>

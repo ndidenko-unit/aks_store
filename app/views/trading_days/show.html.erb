@@ -23,9 +23,9 @@
         <%= form.label :price, 'Цена:' %>
         <%= form.text_field :price, class: 'form-control', autofocus: true, value: '', size: 7 %>
         <%= form.submit "Продать товар без кода", class: 'btn btn-primary' %>
-        <p id="notice"><%= notice.html_safe if notice.present? %></p>
       <% end %>
     </div>
+    <p id="notice"><%= notice.html_safe if notice.present? %></p>
   </div>
 </div>
 <center>

@@ -1,4 +1,4 @@
-<p id="notice"><%= notice %></p>
+
 
 <% if current_user.admin? %>
 <div class="container">
@@ -19,7 +19,7 @@
 <% end %>
 Найдено товаров: <%= @items.count %>
 <div class="form-group"><div class="digg_pagination">
-  <%= will_paginate(@items, :container => false) unless @items.kind_of?(Array)  %>
+  <%= will_paginate(@items, :container => false, previous_label:'Назад', next_label: 'Вперед') unless @items.kind_of?(Array)  %>
 </div></div>
 <table class="table">
   <thead>

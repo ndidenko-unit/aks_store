@@ -1,45 +1,48 @@
-<%= form_with(model: trading_day, local: true) do |form| %>
-  <% if trading_day.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(trading_day.errors.count, "error") %> prohibited this trading_day from being saved:</h2>
-      <ul>
-      <% trading_day.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
+<div class="grandParentContainer">
+  <div class="parentContainer">
+    <div class="login-form">
+      <%= form_with(model: trading_day, local: true) do |form| %>
+        <% if trading_day.errors.any? %>
+          <div id="error_explanation">
+            <h2><%= pluralize(trading_day.errors.count, "error") %> prohibited this trading_day from being saved:</h2>
+            <ul>
+              <% trading_day.errors.full_messages.each do |message| %>
+                <li><%= message %></li>
+              <% end %>
+            </ul>
+          </div>
+        <% end %>
+
+        <div class="form-group">
+          <%= form.label :day %>
+          <%= form.select :day, (1..31).to_a.map(&:to_s), selected: Time.now.strftime("%d").to_i.to_s %>
+        </div>
+
+        <div class="form-group">
+          <%= form.label :month %>
+          <%= form.select :month, (1..12).to_a.map(&:to_s), selected: Time.now.strftime("%m").to_i.to_s %>
+        </div>
+
+        <div class="form-group">
+          <%= form.label :year %>
+          <%= form.select :year, (2018..2028).to_a.map(&:to_s), selected: Time.now.strftime("%Y") %>
+        </div>
+
+        <div class="form-group">
+          <%= form.label :store_id, "Закрепить за" %>
+          <%= form.collection_select :store_id, Store.all, :id, :name %>
+        </div>
+
+        <div class="form-group">
+          <%= form.hidden_field :user_id, value: current_user.id %>
+        </div>
+
+        <div class="form-group">
+          <%= form.submit 'Сохранить', class: 'btn btn-primary' %>
+        </div>
       <% end %>
-      </ul>
     </div>
-  <% end %>
-
-  <div class="field">
-    <%= form.label :day %>
-    <%= form.select :day, (1..31).to_a.map(&:to_s), selected: Time.now.strftime("%d").to_i.to_s %>
+    <%= link_to 'Show', @trading_day %> |
+    <%= link_to 'Back', trading_days_path %>
   </div>
-
-  <div class="field">
-    <%= form.label :month %>
-    <%= form.select :month, (1..12).to_a.map(&:to_s), selected: Time.now.strftime("%m").to_i.to_s %>
-  </div>
-
-  <div class="field">
-    <%= form.label :year %>
-    <%= form.select :year, (2018..2028).to_a.map(&:to_s), selected: Time.now.strftime("%Y") %>
-  </div>
-
-  <div class="form-group">
-    <%= form.label :store_id, "Закрепить за" %>
-    <%= form.collection_select :store_id, Store.all, :id, :name %>
-  </div>
-
-  <div class="form-group">
-    <%= form.hidden_field :user_id, value: current_user.id %>
-  </div>
-
-  <div class="form-group">
-    <%= form.submit 'Создать', class: 'btn btn-primary' %>
-  </div>
-<% end %>
-
-<!--<div class="form-group">-->
-  <%#= form.label :user_id, "Продавец" %>
-  <%#= form.collection_select :user_id, User.all, :id, :email, {:selected => current_user.email.to_s } %>
-<!--</div>-->
+</div>
