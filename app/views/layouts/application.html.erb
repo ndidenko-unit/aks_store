@@ -25,7 +25,7 @@
       <%= link_to 'Смена пароля', edit_user_registration_path %> | <%= link_to 'Роли', admin_path %> |
       <%= link_to 'Выйти из системы', destroy_user_session_path, :method => :delete %></p>
     <% else %>
-      <p><%= link_to 'Войти в систему', new_user_session_path %> или <%= link_to 'Sign up', new_user_registration_path %></p>
+      <p><%= link_to 'Войти в систему', new_user_session_path %> или <%= link_to 'Зарегистрироваться', new_user_registration_path %></p>
     <% end %>
   </div>
 <br><br>
