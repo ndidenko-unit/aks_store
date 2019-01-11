@@ -10,10 +10,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_01_09_155502) do
+ActiveRecord::Schema.define(version: 2019_01_11_172929) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "clients", force: :cascade do |t|
+    t.string "name"
+    t.string "phone"
+    t.integer "discount"
+  end
 
   create_table "expenses", force: :cascade do |t|
     t.float "sum"
@@ -36,6 +42,8 @@ ActiveRecord::Schema.define(version: 2019_01_09_155502) do
     t.bigint "trading_day_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "client_id"
+    t.index ["client_id"], name: "index_items_on_client_id"
     t.index ["status_id"], name: "index_items_on_status_id"
     t.index ["store_id"], name: "index_items_on_store_id"
     t.index ["trading_day_id"], name: "index_items_on_trading_day_id"
@@ -91,4 +99,5 @@ ActiveRecord::Schema.define(version: 2019_01_09_155502) do
     t.index ["item_type", "item_id"], name: "index_versions_on_item_type_and_item_id"
   end
 
+  add_foreign_key "items", "clients"
 end

@@ -1,0 +1,39 @@
+<div class="grandParentContainer">
+  <div class="parentContainer">
+    <div class="login-form">
+      <%= form_with(model: client, local: true) do |form| %>
+        <% if client.errors.any? %>
+          <div id="error_explanation">
+            <h2><%= pluralize(status.errors.count, "error") %> prohibited this status from being saved:</h2>
+
+            <ul>
+              <% client.errors.full_messages.each do |message| %>
+                <li><%= message %></li>
+              <% end %>
+            </ul>
+          </div>
+        <% end %>
+
+        <div class="form-group">
+          <%= form.label :name, 'ФИО клиента' %>
+          <%= form.text_field :name, class: 'form-control' %>
+        </div>
+
+        <div class="form-group">
+          <%= form.label :phone, 'Номер телефона без +38' %>
+          <%= form.text_field :phone, class: 'form-control' %>
+        </div>
+
+        <div class="form-group">
+          <%= form.label :discount, 'Скидка в %' %>
+          <%= form.text_field :discount, class: 'form-control' %>
+        </div>
+
+        <div class="actions">
+          <%= form.submit 'Сохранить', class: 'btn btn-primary' %>
+        </div>
+      <% end %>
+    </div>
+    <%= link_to 'Назад', clients_path %>
+  </div>
+</div>

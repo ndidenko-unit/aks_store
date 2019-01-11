@@ -1,0 +1,42 @@
+<p id="notice"><%= notice %></p>
+
+<h1 class="text-center">Клиенты</h1>
+<a href="<%= new_client_path %>"><button type="button" class="btn btn-primary">Регистрация нового клиента</button></a>
+<br><br>
+<%= form_tag clients_path, method: 'get', class: 'navbar-form' do %>
+  <div class="form-group"><%= label_tag :search, 'Поиск' %></div>
+  <div class="form-group"><%= text_field_tag :search, params[:search], class: 'form-control', size: 80 %></div>
+  <div class="form-group"><%= submit_tag 'Поиск', name: nil, class: 'btn btn-primary btn-block' %></div>
+<% end %>
+Найдено товаров: <%= @clients.count %>
+
+<table class="table">
+  <thead>
+  <tr class="info">
+    <th>ID</th>
+    <th>ФИО</th>
+    <th>Номер телефона</th>
+    <th>Скидка в %</th>
+    <th>Кол-во покупок</th>
+    <th colspan="3"></th>
+  </tr>
+  </thead>
+
+  <tbody>
+  <% @clients.each do |client| %>
+    <tr>
+      <td><%= client.id %></td>
+      <td><%= client.name %></td>
+      <td><%= client.phone %></td>
+      <td><%= client.discount %></td>
+      <td><%= client.items.count %></td>
+      <td><%= link_to 'Просмотр', client %></td>
+      <td><%= link_to 'Изменить', edit_client_path(client) %></td>
+      <td><%= link_to 'Удалить', client, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>
+
+<br>
+

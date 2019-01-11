@@ -14,6 +14,7 @@ Rails.application.routes.draw do
   delete '/expenses/:id', to: 'expenses#destroy', as: 'expense'
 
   resources :statuses
+  resources :clients
   resources :stores
   resources :trading_days do
     member do
