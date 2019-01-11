@@ -30,7 +30,7 @@
   </div>
 <br><br>
     <% if notice.present? %>
-    <div class="alert alert-danger"><p id="notice"><%= notice %></p></div>
+    <div class="alert alert-danger"><p id="notice"><%= notice.html_safe %></p></div>
     <% end %>
     <%= yield %>
   </body>

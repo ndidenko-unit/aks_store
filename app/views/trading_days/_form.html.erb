@@ -14,17 +14,17 @@
         <% end %>
 
         <div class="form-group">
-          <%= form.label :day %>
+          <%= form.label :day, 'День' %>
           <%= form.select :day, (1..31).to_a.map(&:to_s), selected: Time.now.strftime("%d").to_i.to_s %>
         </div>
 
         <div class="form-group">
-          <%= form.label :month %>
+          <%= form.label :month, 'Месяц' %>
           <%= form.select :month, (1..12).to_a.map(&:to_s), selected: Time.now.strftime("%m").to_i.to_s %>
         </div>
 
         <div class="form-group">
-          <%= form.label :year %>
+          <%= form.label :year, 'Год' %>
           <%= form.select :year, (2018..2028).to_a.map(&:to_s), selected: Time.now.strftime("%Y") %>
         </div>
 

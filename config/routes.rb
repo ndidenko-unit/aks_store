@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   get 'admin', action: :admin, controller: 'users'
   post 'admin', action: :change_role, controller: 'users'
   get 'my_day', action: :my_day, controller: 'trading_days'
+  post 'add_expense', action: :add_expense, controller: 'expenses'
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
   resources :items do
     member do
@@ -18,7 +19,6 @@ Rails.application.routes.draw do
     member do
       patch 'trade_item'
       patch 'trade_item_without_code'
-      post 'add_expense'
       post 'change_seller'
       get 'close_day'
       get 'unblock_day'

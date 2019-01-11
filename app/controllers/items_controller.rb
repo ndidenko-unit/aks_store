@@ -4,8 +4,6 @@ class ItemsController < ApplicationController
   before_action :blocked_user!
   before_action :only_for_admin!, only: [:destroy]
 
-  # GET /items
-  # GET /items.json
   def index
     @item = Item.new
     @items = []
@@ -15,8 +13,7 @@ class ItemsController < ApplicationController
     @all_statuses = Status.all.map(&:name).unshift('Все товары')
   end
 
-  # GET /items/1
-  # GET /items/1.json
+
   def show
     tmp_version = @item
     @versions = []
@@ -26,48 +23,33 @@ class ItemsController < ApplicationController
     end
   end
 
-  # GET /items/new
   def new
     @item = Item.new
   end
 
-  # GET /items/1/edit
   def edit
   end
 
-  # POST /items
-  # POST /items.json
   def create
     @item = Item.new(item_params)
-
-    respond_to do |format|
-      if @item.save
-        format.html { redirect_to @item, notice: 'Item was successfully created.' }
-      else
-        format.html { render :new }
-      end
+    if @item.save
+      redirect_to @item, notice: 'Товар добавлен.'
+    else
+      render :new
     end
   end
 
-  # PATCH/PUT /items/1
-  # PATCH/PUT /items/1.json
   def update
-    respond_to do |format|
-      if @item.update(item_params)
-        format.html { redirect_to @item, notice: 'Item was successfully updated.' }
-      else
-        format.html { render :edit }
-      end
+    if @item.update(item_params)
+      redirect_to @item, notice: 'Товар обновлен.'
+    else
+      render :edit
     end
   end
 
-  # DELETE /items/1
-  # DELETE /items/1.json
   def destroy
     @item.destroy
-    respond_to do |format|
-      format.html { redirect_to items_url, notice: 'Item was successfully destroyed.' }
-    end
+    redirect_to items_url, notice: 'Товар удален.'
   end
 
   def cancel_sale
@@ -83,7 +65,7 @@ class ItemsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
+
   def search_items(search_params, status_id)
     items = []
     search_params ||= ''
@@ -106,7 +88,6 @@ class ItemsController < ApplicationController
     @item = Item.find(params[:id])
   end
 
-  # Never trust parameters from the scary internet, only allow the white list through.
   def item_params
     params.require(:item).permit(:name, :purchase, :retail, :store_id, :status_id, :user_id)
   end

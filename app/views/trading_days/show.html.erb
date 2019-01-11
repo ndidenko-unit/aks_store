@@ -20,8 +20,12 @@
       <%= form_for @trading_day, url: url_for(action: 'trade_item_without_code'), html: {class: 'navbar-form'} do |form| %>
         <%= form.label :name, 'Название товара:' %>
         <%= form.text_field :name, class: 'form-control', autofocus: true, value: '', size: 50 %>
-        <%= form.label :price, 'Цена:' %>
-        <%= form.text_field :price, class: 'form-control', autofocus: true, value: '', size: 7 %>
+        <%= form.label :retail, 'Цена:' %>
+        <%= form.text_field :retail, class: 'form-control', autofocus: true, value: '', size: 7 %>
+        <%= form.hidden_field :status_id, value: 2 %>
+        <%= form.hidden_field :user_id, value: current_user.id %>
+        <%= form.hidden_field :store_id, value: @trading_day.store.id %>
+        <%= form.hidden_field :trading_day_id, value: @trading_day.id %>
         <%= form.submit "Продать товар без кода", class: 'btn btn-primary' %>
       <% end %>
     </div>
@@ -48,7 +52,6 @@
         <th colspan="3"></th>
       </tr>
     </thead>
-
     <tbody>
       <% @trading_day.items.each do |item| %>
         <tr>
@@ -62,7 +65,8 @@
           <td><%= item.user.email %></td>
           <td><%= link_to 'Просмотреть', item %></td>
           <td><%= link_to 'Изменить', edit_item_path(item) %></td>
-          <td><%= link_to 'Удалить', cancel_sale_item_path(item), data: { confirm: 'Are you sure?' } %></td>
+          <td><%= link_to 'Удалить из продаж', cancel_sale_item_path(item),
+                        data: { confirm: 'Внимание, товар удалится только из продаж, для полного удаления используйте "Управление товарами"' } %></td>
         </tr>
       <% end %>
     </tbody>
@@ -99,12 +103,15 @@
   </table>
 <% end %>
 
-<%= form_for @expense, :url => url_for(:action => 'add_expense'), html: {class: 'navbar-form'} do |form| %>
+<%= form_for @expense, url: url_for(action: 'add_expense', controller: 'expenses'), html: {class: 'navbar-form'} do |form| %>
   <%= form.label :sum, 'Сумма расхода в грн:' %>
   <%= form.text_field :sum, class: 'form-control', autocomplete: false, size: 5 %>
   <%= form.label :comment, 'Причина расхода:' %>
   <%= form.text_field :comment, class: 'form-control', autocomplete: false, size: 25 %>
+  <%= form.hidden_field :trading_day_id, value: @trading_day.id %>
+  <%= form.hidden_field :user_id, value: current_user.id %>
   <%= form.submit "Добавить", class: 'btn btn-primary' %>
+
 <% end %>
 
 <%= link_to 'Edit', edit_trading_day_path(@trading_day) %> |
