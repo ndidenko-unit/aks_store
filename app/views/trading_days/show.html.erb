@@ -64,7 +64,10 @@
           <td><%= item.updated_at + 2*60*60 %></td>
           <td><%= item.user.email %></td>
           <td><%= link_to 'Просмотреть', item %></td>
-          <td><%= link_to 'Изменить', edit_item_path(item) %></td>
+          <td>
+            <%= link_to 'Добавить скидку', discount_item_path(item) if !item.client.present? %>
+            <%=  "Получена скидка #{item.client.discount}%" if item.client.present? %>
+          </td>
           <td><%= link_to 'Удалить из продаж', cancel_sale_item_path(item),
                         data: { confirm: 'Внимание, товар удалится только из продаж, для полного удаления используйте "Управление товарами"' } %></td>
         </tr>

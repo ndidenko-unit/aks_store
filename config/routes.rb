@@ -7,6 +7,8 @@ Rails.application.routes.draw do
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
   resources :items do
     member do
+      get 'discount'
+      patch 'discount'
       get 'cancel_sale'
     end
   end
@@ -17,6 +19,7 @@ Rails.application.routes.draw do
   resources :clients
   resources :stores
   resources :trading_days do
+    get :autocomplete_item_id, on: :collection
     member do
       patch 'trade_item'
       patch 'trade_item_without_code'

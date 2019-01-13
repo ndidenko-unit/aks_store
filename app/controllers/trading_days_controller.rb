@@ -66,7 +66,6 @@ class TradingDaysController < ApplicationController
   end
 
   def trade_item_without_code
-    binding.pry
     @item = Item.new(trading_day_params)
     if @item.save
       redirect_to @trading_day, notice: "Укажите на товаре код: #{@item.id} <br> Товар #{@item.name} добавлен в список продаж."

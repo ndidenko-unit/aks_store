@@ -1,0 +1,18 @@
+
+<% if @item.client.present? %>
+  <h2 class="text-center">На этот товар уже установлена скидка <%= @item.client.discount %> %</h2>
+<% else %>
+  <h1 class="text-center">Добавить скидку</h1>
+  <%= form_for @item, url: url_for(action: 'discount', controller: 'items'), html: {class: 'navbar-form'} do |form| %>
+    <%= form.label :phone, 'Телефон клиента (для скидки):' %>
+    <%= form.text_field :phone, class: 'form-control', autofocus: true, value: '', size: 11 %>
+    <%= form.submit "Продать", class: 'btn btn-primary' %>
+  <% end %>
+<% end %>
+
+<br><br>
+<p class="text-center">
+  <%= link_to 'На страницу товара', @item %> |
+  <%= link_to 'Назад в торговый день', my_day_path %>
+</p>
+</center>

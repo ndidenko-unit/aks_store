@@ -1,5 +1,5 @@
 class ItemsController < ApplicationController
-  before_action :set_item, only: [:show, :edit, :update, :destroy, :cancel_sale]
+  before_action :set_item, only: [:show, :edit, :update, :destroy, :cancel_sale, :discount]
   before_action :authenticate_user!
   before_action :blocked_user!
   before_action :only_for_admin!, only: [:destroy]
@@ -58,10 +58,33 @@ class ItemsController < ApplicationController
       redirect_to @trading_day, notice: 'Торговый день закрыт.'
     else
       @trading_day.items.delete(@item)
-      status_stock = {status_id: 1, user_id: current_user.id}
+      status_stock = {status_id: 1, user_id: current_user.id, client_id: nil}
       @item.update(status_stock)
+
       redirect_to @trading_day, notice: 'Продажа отменена.'
     end
+  end
+
+  def discount
+    return if params[:item].blank?
+    phone = params[:item][:phone]
+    client = Client.where("phone ~* ?", params[:item][:phone])
+    if client.count == 1 && phone.length == 10
+      @item.client_id = client.first.id
+      @item.retail = (@item.retail / 100 * (100 - client.first.discount)).to_i.to_f
+      @item.save
+      notice = "Скидка в размере #{client.first.discount}% успешно назначена, новая цена товара #{@item.retail} грн."
+    elsif phone.length != 10
+      notice = "В номере телефона должно быть 10 симоволов, например: 0955773480. Вы ввели #{phone.length} символов. Попробуйте снова."
+    elsif client.count > 2
+      notice = "Найдено более одного клиента с номером #{phone}. Перейдите в раздел Клиенты"
+    else
+      notice = "Клиента с таким номером не существует. Зарегестрируйте его в разделе Клиенты"
+    end
+    redirect_to discount_item_path(@item), notice: notice
+  end
+
+  def add_client
   end
 
   private

@@ -3,7 +3,7 @@ class Item < ApplicationRecord
   belongs_to :store
   belongs_to :trading_day, optional: true
   belongs_to :user
-  belongs_to :client
+  belongs_to :client, optional: true
 
   validates :name, :retail, :store_id, :status_id, :user_id, presence: true
   validates :retail, numericality: true
